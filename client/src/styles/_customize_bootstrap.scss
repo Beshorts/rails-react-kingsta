@@ -1,0 +1,61 @@
+// add google fonts
+@import url("https://fonts.googleapis.com/css2?family=Great+Vibes&family=Open+Sans:wght@300;400;600;700;800&display=swap");
+
+//font-family: 'Great Vibes', cursive;
+//font-family: 'Open Sans', sans-serif;
+
+// Open Sans font weight global variables
+$OSlight: 300;
+$OSregular: 400;
+$OSsemi-bold: 600;
+$OSbold: 700;
+$OSextra-bold: 800;
+
+// main background
+$main-bg: rgba(255, 255, 255, 1);
+
+// BUTTONS BG
+// homepage btn + on hover second navigation bar
+$fucsia: rgba(255, 3, 109, 1);
+// btn primary or link
+$costumblue: rgba(59, 160, 253, 1);
+// btn actions
+$green: rgba(0, 217, 192, 1);
+// btn actions
+$purple: rgba(194, 65, 255, 0.99);
+
+// ICONS
+$red: rgba(255, 7, 7, 1);
+// icons on hover
+$lighttext: rgba(9, 4, 70, 0.2);
+
+// color bg text
+$salmon: rgba(255, 205, 178, 1);
+
+// TEXT COLORS
+// deep blue dark for all texts
+$text: rgba(9, 4, 70, 1);
+// for texts
+$grey: rgba(109, 105, 117, 1);
+// for forms example input
+$lightgrey: rgba(9, 4, 70, 0.4);
+// for bg forms input
+$lightgrey-red: rgba(248, 244, 244, 1);
+
+/* set custom behaviours on all pages and override bootstrap */
+body {
+  margin: 0 auto;
+  background-color: $main-bg !important;
+}
+
+
+h1, h2, h3, h4, h5, h6, p, a, span  {
+  font-family: 'Open Sans', sans-serif;
+  color: $text;
+}
+
+
+
+// Import Bootstrap and its default variables
+// keep this line at the end to override it
+@import '~bootstrap/scss/bootstrap.scss';
