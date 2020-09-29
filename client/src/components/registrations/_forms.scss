@@ -1,0 +1,72 @@
+
+// UI rules for signup and login forms
+.registration-forms-container {
+  margin-top: 3rem;
+  .registration-form {
+    background-color: white;
+    margin-top: 5rem;
+    .form-header {
+      margin-bottom: 1rem;
+      padding: 2rem 0.3rem;
+      padding-bottom: 0;
+      p:hover {
+        color: blue;
+      }
+    }
+    .form-all-inputs {
+      padding-bottom: 0;
+    }
+    .form-title {
+      font-weight: $OSextra-bold;
+      font-size: 1.8em;
+    }
+    .go-to-link {
+      color: $costumblue;
+      font-weight: $OSbold;
+      text-decoration: underline;
+      line-height: 1px;
+      padding-left: 2.8rem;
+      margin: 0;
+      transition: 0.6s ease;
+      &:hover {
+        color: blue;
+      }
+    }
+    .forgot-password {
+      color: $text;
+      font-family: 'Great Vibes', cursive;
+      font-size: 1.4em;
+      padding-top: 0.4rem;
+      transition: 0.6s ease;
+      &:hover {
+        color: blue;
+      }
+    }
+    .suggestion-text {
+      font-size: 0.9em;
+      font-weight: $OSextra-bold;
+      color: $lighttext;
+      padding-bottom: 0.25rem;
+    }
+    .form-control {
+      background-color: $lightgrey-red;
+      border: none !important;
+      &:focus {
+        box-shadow: none !important;
+        background-color: $lightgrey-red !important;
+      }
+    }
+    .form-check-label {
+      font-size: 0.8em;
+    }
+    .input-title {
+      font-weight: $OSsemi-bold;
+    }
+  } //close registration-form
+} // close registration-forms-container
+
+input-field::placeholder {
+  font-size: 0.8em !important;
+  opacity: 0.4 !important;
+  font-weight: 800 !important;
+}

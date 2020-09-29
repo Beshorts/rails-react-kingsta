@@ -11,10 +11,9 @@ class Api::UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
-    @avatar = rails_blob_path(@user.avatar)
     @posts = @user.posts.order(created_at: :desc)
     if @user
-      render json: { user: @user, avatar: @avatar, posts: @posts }
+      render json: { user: @user, posts: @posts }
     else
       render json: { status: 500, errors: ['somehing went wrong!'] }
     end
@@ -39,22 +38,10 @@ class Api::UsersController < ApplicationController
     end
   end
 
-  def update
-    @user = User.find(params[:id])
-    if @user.update_attributes(params_update_current_user)
-      render json: { status: :updated, user: @user }
-    else
-      render json: { status: 500, errors: ['something went wrong'] }
-    end
-  end
 
   private
 
   def user_params
-    params.require(:user).permit(:username, :email, :password, :password_confirmation)
-  end
-
-  def params_update_current_user
-    params.require(:user).permit(:bio, :city)
+    params.require(:user).permit(:username, :email, :password, :password_confirmation, :bio, :city)
   end
 end

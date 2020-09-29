@@ -35,6 +35,8 @@ $salmon: rgba(255, 205, 178, 1);
 // TEXT COLORS
 // deep blue dark for all texts
 $text: rgba(9, 4, 70, 1);
+// light blue for contrast texts
+$lightbluetext: rgba(9, 4, 70, 0.6);
 // for texts
 $grey: rgba(109, 105, 117, 1);
 // for forms example input
@@ -42,19 +44,22 @@ $lightgrey: rgba(9, 4, 70, 0.4);
 // for bg forms input
 $lightgrey-red: rgba(248, 244, 244, 1);
 
-/* set custom behaviours on all pages and override bootstrap */
+// set custom behaviours on all pages and override bootstrap
 body {
   margin: 0 auto;
   background-color: $main-bg !important;
+
 }
 
+// hide browser scrollbar on desktop size
+body::-webkit-scrollbar {
+    display: none;
+}
 
 h1, h2, h3, h4, h5, h6, p, a, span  {
   font-family: 'Open Sans', sans-serif;
   color: $text;
 }
-
-
 
 // Import Bootstrap and its default variables
 // keep this line at the end to override it

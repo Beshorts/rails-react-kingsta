@@ -1,0 +1,33 @@
+// BOOTSTRAP override btn general rules
+.btn {
+  font-weight: $OSsemi-bold !important;
+  color: white;
+  font-family: 'Open Sans', sans-serif;
+  border: none !important;
+  padding: 0.5rem 1.2rem !important;
+}
+
+// BTN CUSTOM RULES
+
+// signup btn on Home
+.btn-info {
+  background-color: $fucsia !important;
+  padding: 0.8rem 3rem !important;
+  border-radius: 26px !important;
+  border: none !important;
+  box-shadow: none !important;
+  font-size: 1em !important;
+}
+
+// login, sign up user and create post pages
+.btn-container {
+  margin-top: 2rem;
+  //margin-bottom: 2rem;
+}
+
+// btn "submit" on PostCard
+.button-save-delete .btn-primary {
+  margin-left: 1.875rem;
+}
+
+

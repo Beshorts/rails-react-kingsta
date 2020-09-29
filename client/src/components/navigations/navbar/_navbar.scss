@@ -1,0 +1,58 @@
+
+.navbar {
+  border-bottom: 1px solid $lighttext;
+  // add style to search bar
+  .form-control  {
+    border-color: rgba(9, 4, 70, 0.4);
+    font-size: 0.8em;
+    width: 12rem;
+    &:focus {
+      border-color: rgba(9, 4, 70, 0.4);
+      box-shadow: none !important;
+    }
+    @include for-mobile-m {
+      width: 13.875rem;
+    }
+    @include for-mobile-xl {
+      width: 22.3125rem !important;
+    }
+    @include for-tablet-l {
+      width: 31.125rem !important;
+      font-size: 1em;
+    }
+  } // close form-control
+
+  #logo-txt-1 {
+    font-weight: $OSextra-bold;
+  }
+  #logo-txt-2 {
+    font-family:'Great Vibes', cursive;
+    font-size: 1.5em;
+  }
+  .navbar-toggler  {
+    border: none !important;
+  }
+   .nav-link {
+    display:block;
+    padding: 0 !important;
+    padding: 0.5rem 0 !important;
+    border-radius: 4px;
+    transition: 0.2s ease;
+    &:hover {
+      background-color: rgba(9, 4, 70, 0.1);
+    }
+    @include for-mobile-l {
+    padding: 0.5rem 0.75rem !important;
+    }
+    @include for-tablet {
+      &:hover {
+      background-color: $main-bg;
+     }
+    }
+  .navbar-icon {
+    font-size: 1.1em;
+    margin-left: 0.3rem;
+    }
+  } // close nav-link
+} // close navbar
+

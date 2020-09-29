@@ -1,0 +1,85 @@
+.homepage {
+  height: 100vh;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-align-items: center;
+  align-items: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+  .home-actions {
+    display: grid;
+    @include for-tablet {
+      grid-template-columns: 46% 53%;
+    }
+    .homepage-image {
+      margin-top: 4rem;
+      width: 21.5rem;
+      @include for-mobile-m {
+        margin-top: 3rem;
+        width: 23.75rem;
+      }
+      @include for-mobile-l {
+        justify-self: center;
+        width: 26.5rem;
+      }
+      @include for-tablet {
+        order: 2;
+        width: 28.625rem;
+        margin-top: 0;
+      }
+      @include for-laptop {
+        width: 37.625rem;
+      }
+    } // close homepage-image
+
+     .body-homepage-elements {
+        display: grid;
+        grid-template-rows: auto;
+        grid-row-gap: 0.9375rem;
+       .logo-brand-1 {
+         font-weight: $OSextra-bold;
+         font-size: 3.4em;
+        }
+       .logo-brand-2 {
+         font-family:'Great Vibes', cursive;
+         font-size: 5em;
+       }
+      .homepage-link-forms {
+        display: grid;
+        grid-template-columns: 32% 60%;
+        grid-template-rows: auto;
+        @include for-mobile-l {
+          grid-template-columns: 26% 60%;
+        }
+        @include for-tablet {
+          grid-template-columns: 45% 60%;
+        }
+        .container-link {
+          align-self: center;
+          .go-to-link {
+            color: $costumblue;
+            font-weight: $OSbold;
+            text-decoration: underline;
+            line-height: 1px;
+            transition: 0.6s ease;
+            align-self: center;
+            &:hover {
+              color: blue;
+            }
+          }
+        }
+       .forgot-password {
+          align-self: center;
+          color: $text;
+          font-family: 'Great Vibes', cursive;
+          font-size: 1.4em;
+          padding-top: 0.4rem;
+          transition: 0.6s ease;
+          &:hover {
+            color: blue;
+          }
+        }
+      }
+    } // close body-homepage-elements
+  } // close home-actions-container
+} // close homepage
