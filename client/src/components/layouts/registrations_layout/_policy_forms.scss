@@ -1,0 +1,62 @@
+.policy-text-draw {
+  display: grid;
+  grid-template-columns: 27% 77%;
+  margin-bottom: 0.625rem;
+  @include for-mobile-m {
+    grid-template-columns: 26% 68%;
+    column-gap: 1.5625rem;
+   }
+  @include for-mobile-l {
+    grid-template-columns: 26% 68%;
+    column-gap: 3.8125rem;
+   }
+   @include for-tablet {
+    margin-top: 2rem;
+    display: flex;
+    flex-direction: column;
+   }
+   @include for-tablet-l {
+     margin-top: 16.4rem;
+     margin-bottom: 5rem;
+     background-color: $salmon;
+     border-radius: 4px;
+     justify-content: center;
+   }
+    .policy-text {
+      padding: 0.8rem 0.8rem;
+      background-color: $salmon;
+      border-radius: 0.2rem;
+      @include for-tablet {
+      }
+      @include for-tablet-l {
+        margin: 0;
+        background: none;
+        order: 2;
+      }
+      p {
+        margin: 0;
+        font-size: 0.6em;
+        @include for-mobile-l {
+          font-size: 0.8em;
+        }
+        @include for-tablet {
+          font-size: 0.68em;
+        }
+      } // close p
+    } // close policy-text
+
+  .forms-image {
+    padding-top: 1rem;
+    grid-column: 2;
+    grid-row: 1/3;
+    @include for-mobile-m {
+    padding-top: 0.7rem ;
+   }
+    @include for-tablet-l {
+      padding-top: 1.7rem;
+      max-width: 19rem;
+      margin-left: 2rem;
+      order: 1;
+     }
+   }
+} // close policy-text-draw

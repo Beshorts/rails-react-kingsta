@@ -1,0 +1,33 @@
+.form-header-navigation {
+  background: $main-bg;
+  display: grid;
+  grid-template-columns: 40% 60%;
+  align-items: center;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  @include for-tablet {
+    grid-template-columns: 45% 55%;
+  }
+  .back-link {
+    @include for-mobile-l {
+      padding-left: 0.9375rem;
+    }
+    @include for-tablet-l {
+      padding-left: 2.5rem;
+    }
+    @include for-laptop {
+      padding-left: 7.5rem;
+    }
+    .link-icon-back {
+      font-size: 2em;
+      color: $text;
+    }
+  } //close back-link
+  .logo-brand-1 {
+    font-weight: $OSextra-bold;
+    font-size: 1.8em;
+  }
+  .logo-brand-2 {
+    font-family:'Great Vibes', cursive;
+    font-size: 3em;
+  }
+}

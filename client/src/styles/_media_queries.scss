@@ -1,0 +1,32 @@
+@mixin for-mobile-m {
+  @media (min-width: 374.98px) { @content; }
+}
+
+@mixin for-mobile-l {
+  @media (min-width: 413.98px) { @content; }
+}
+
+@mixin for-mobile-xl {
+  @media (min-width: 575.98px) { @content; }
+}
+
+@mixin for-tablet {
+  @media (min-width: 767.98px) { @content; }
+}
+
+@mixin for-tablet-l {
+  @media (min-width: 991.98px) { @content; }
+}
+
+@mixin for-laptop {
+  @media (min-width: 1023.98px) { @content; }
+}
+
+@mixin for-laptop-m {
+  @media (min-width: 1199.98px) { @content; }
+}
+
+@mixin for-laptop-l {
+  @media (min-width: 1439.98px) { @content; }
+}
+

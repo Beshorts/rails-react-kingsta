@@ -1,3 +1,23 @@
+// import bootstrap variables customization
 @import '_customize_bootstrap.scss';
 
+// import  mixin queries
+@import './media_queries';
+
+// import scss  of layouts
+@import '../components/layouts/registrations_layout/_registrations_layout.scss';
+@import '../components/layouts/registrations_layout/_header_forms.scss';
+@import '../components/layouts/registrations_layout/_policy_forms.scss';
+
+// import scss of each element
+@import '../components/elements/button/_button.scss';
+@import '../components/elements/profile_card/_user_profile_card.scss';
+@import '../components/elements/post_card/_post_card.scss';
+
 // import scss of each component
+@import '../components/registrations/_forms.scss';
+@import '../components/homepage/_home.scss';
+@import '../components/navigations/navbar/_navbar.scss';
+@import '../components/navigations/nav_actions/_user_nav_actions.scss';
+@import '../components/posts/posts_index/_user_posts_index.scss';
+@import '../components/posts/posts_searched/_posts_searched.scss';

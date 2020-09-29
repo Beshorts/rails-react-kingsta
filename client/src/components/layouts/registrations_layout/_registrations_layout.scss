@@ -1,0 +1,9 @@
+.forms-policy-container {
+  @include for-tablet-l {
+  display: grid;
+  grid-template-columns: 30.625rem 25rem;
+  }
+  .policy-footer{
+    display: grid;
+  }
+}

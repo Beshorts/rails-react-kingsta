@@ -1,8 +1,7 @@
 class ApplicationController < ActionController::API
+
   # add module to run helper_method
   include AbstractController::Helpers
-  # prevents Rails from using its authenticity token
-  #skip_before_action :verify_authenticity_token
 
   # methods defined below will be passed to all other controllers
   helper_method :login!, :logged_in?, :current_user, :authorized_user?, :logout!
