@@ -1,5 +1,8 @@
 {
   "name": "rails-react-kingsta",
+  "engines": {
+    "node": "12.18"
+  },
   "version": "1.0.0",
   "description": "This README would normally document whatever steps are necessary to get the application up and running.",
   "main": "index.js",
