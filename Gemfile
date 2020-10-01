@@ -19,7 +19,7 @@ gem 'bcrypt', '~> 3.1.7'
 #add cloudinary fro active storage
 gem 'cloudinary'
 gem 'dotenv-rails'
-
+gem 'foreman'
 # Use ActiveStorage variant
 # gem 'mini_magick', '~> 4.8'
 
