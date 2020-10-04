@@ -17,6 +17,11 @@
   border: none !important;
   box-shadow: none !important;
   font-size: 1em !important;
+  transition: 0.3s ease;
+  &:hover {
+    background-color: rgb(179, 0, 74) !important;
+    color: rgba(255, 255, 255, 0.8);
+  }
 }
 
 // login, sign up user and create post pages
