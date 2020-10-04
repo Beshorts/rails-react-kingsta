@@ -31,7 +31,7 @@ const LoginForm = (props) => {
       password: values.password
     }
 
-    axios.post('http://localhost:3000/api/login', {user}, {withCredentials: true})
+    axios.post('/api/login', {user}, {withCredentials: true})
     .then((response) => {
       if (response.data.logged_in) {
         // store data in localStorage to keep user login session on reload page

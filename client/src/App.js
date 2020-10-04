@@ -73,7 +73,7 @@ const App = (props) => {
      WITHCREDENTIALS allows Rails server to set and read cookies on front-end's browser
      using localStorage to persist login status user on refresh pages */
   const loginStatus = () => {
-    axios.get('http://localhost:3000/api/logged_in', {withCredentials: true})
+    axios.get('/api/logged_in', {withCredentials: true})
       .then(response => {
         console.log(response.data.logged_in);
         console.log(response);

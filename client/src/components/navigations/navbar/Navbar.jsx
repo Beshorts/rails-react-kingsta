@@ -40,7 +40,7 @@ function Navbar(props) {
   // call handleLogout fucntion from App.js
   // server request triggers sessions_controller destroy in Rails and clear localSotrage in browser
   const handleClick = () => {
-      axios.delete('http://localhost:3000/api/logout', {withCredentials: true})
+      axios.delete('/api/logout', {withCredentials: true})
         .then(response => {
           props.handleLogout();
           localStorage.clear();
