@@ -4,12 +4,13 @@ import axios from 'axios';
 
 import {Link} from 'react-router-dom';
 
-// component who generate random image for post
-import ImagePost from '../Image_post';
+import Img from '../../elements/Img';
+
 
 const PostsSearched = (props) => {
 
   const [filteredPosts, setFilteredPosts] = useState([]);
+  const [images, setImages] = useState('');
   const [notFound, setNotFound] = useState(false);
   const [error, setError] = useState(false);
 
@@ -32,23 +33,37 @@ const PostsSearched = (props) => {
         // conditional response logic
         if (posts.length === 0)  {
           setNotFound(true);
+          setImages('');
           setFilteredPosts([]);
         } else if (posts.length > 0) {
           setNotFound(false);
           setError(false);
+          setImages(response.data.images)
           setFilteredPosts(postsListFiltered);
+          console.log(postsListFiltered);
         } else {
          setError(true);
         }
       })
-    }, [query, setFilteredPosts]);
+    }, [query, setFilteredPosts, setImages]);
+
+// iterate through posts and images arrays and associate post to his image in a new array
+let postWithImage = [];
+for (let i = 0; i < filteredPosts.length; i++) {
+  postWithImage.push({
+    post: filteredPosts[i],
+    image: images[i]
+  });
+}
+
+console.log(postWithImage);
 
   // show posts who response to query parameters
   const searchResults =
       <div className="posts-index-board">
-        {filteredPosts.map(post =>
-        ( <Link to={`/posts/${post.id}`} key={post.id} >
-             <ImagePost post={post} key={post.id} />
+        {postWithImage.map(item =>
+        ( <Link to={`/posts/${item.post.id}`} key={item.post.id} >
+             <Img url={item.image} alt="amazing me" />
           </Link> )
         )}
       </div>

@@ -1,4 +1,5 @@
 class User < ApplicationRecord
+    include Rails.application.routes.url_helpers
 
   # attribute in order that bcrypt gem work
   has_secure_password
@@ -14,4 +15,5 @@ class User < ApplicationRecord
   has_one_attached :avatar
   # relation one-to-many
   has_many :posts
+
 end

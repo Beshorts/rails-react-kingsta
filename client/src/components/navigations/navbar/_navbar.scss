@@ -1,6 +1,7 @@
 
 .navbar {
   border-bottom: 1px solid $lighttext;
+  box-shadow: 0 0 16px rgba(0,0,0,0.1);
   // add style to search bar
   .form-control  {
     border-color: rgba(9, 4, 70, 0.4);

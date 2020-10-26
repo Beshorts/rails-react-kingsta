@@ -4,14 +4,13 @@ import {Link} from 'react-router-dom';
 
 import axios from 'axios';
 
-// component for random image
-import ImagePost from '../Image_post';
-
+import Img from '../../elements/Img';
 import emptyPosts  from '../../images/emptyPosts.svg';
 
 function UserPostsIndex(props) {
 
   const [posts, setPosts] = useState([]);
+  const [images, setImages] = useState('');
   const [noPost, setNoPost] = useState(false);
   const [error, setError] = useState(false);
 
@@ -29,7 +28,8 @@ function UserPostsIndex(props) {
         setError(false);
         setNoPost(false);
         setPosts(response.data.posts);
-        console.log(response.data.posts);
+        setImages(response.data.images);
+        console.log(response.data);
         console.log(response.data.posts.length);
       } else if (response.data.posts.length === 0 ) {
           setNoPost(true);
@@ -40,13 +40,24 @@ function UserPostsIndex(props) {
     return () => isSubscribed = false;
   }, [setPosts, userId]);
 
+// iterate through posts and images arrays and associate post to his image in a new array
+let postWithImage = [];
+for (let i = 0; i < posts.length; i++) {
+  postWithImage.push({
+    post: posts[i],
+    image: images[i]
+  });
+}
+
+console.log(postWithImage);
   // iterate through Posts array and get all posts from currentUser
   // on click image redirect to post details
   const postIndex =
     <div className="posts-index-board">
-      {posts.map(post =>
-      ( <Link to={`/posts/${post.id}`} key={post.id} >
-           <ImagePost post={post} key={post.id} />
+      {
+        postWithImage.map(item =>
+      ( <Link to={`/posts/${item.post.id}`} key={item.post.id} >
+           <Img url={item.image} alt="amazing me"/>
         </Link> )
       )}
     </div>

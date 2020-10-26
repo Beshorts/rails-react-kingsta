@@ -5,12 +5,13 @@ import {Link} from 'react-router-dom';
 import axios from 'axios';
 
 // import librairie for avatar
-import Avatar from 'react-avatar';
+//import Avatar from 'react-avatar';
 
 // component for post random image
-import ImagePost from '../Image_post';
+//import ImagePost from '../Image_post';
 
 // import element
+import Img from '../../elements/Img';
 import PostCard from '../../elements/post_card/Post_card';
 import Button from '../../elements/button/Button';
 
@@ -18,8 +19,10 @@ function UserPost(props) {
 
   // set hooks initial state
   const [post, setPost] = useState([]);
-  const [postId, setPostId] = useState([]);
+  const [postId, setPostId] = useState('');
+  const [image, setImage] = useState('');
   const [user, setUser] = useState([]);
+  const [avatar, setAvatar] = useState('')
   // eslint-disable-next-line no-unused-vars
   const [postDestroy, setPostDestroy] = useState(false);
   const [error, setError] = useState(false);
@@ -31,18 +34,21 @@ function UserPost(props) {
 
     const { postId } = props.match.params;
 
-    axios.get(`/api/posts/${postId}`)
+    axios.get(`/api/posts/${postId}`,{post}, {withCredentials: true})
       .then(response => {
         setError(false);
-        setPostId(response.data.post.user_id);
+        //setPostId(response.data.post.user_id);
         setPost(response.data.post.description);
+        setPostId(response.data.post.user_id);
         setUser(response.data.user);
-        console.log(response.data);
+        setImage(response.data.image);
+        setAvatar(response.data.avatar);
         console.log(response.data.post);
+        console.log(response.data.image);
       }).catch((error) => {
          setError(true);
       })
-    },[setUser, props.match.params, setPost]);
+    },[]);
 
   // delete current post generated and redirect to currentUser profile
   const deletePost = () => {
@@ -62,6 +68,7 @@ function UserPost(props) {
 
   /* find hashtags inside post description and make it clickable,
      split string objects and keep space between */
+
   const descriptionHashTags = post.toString().split(/(\s+)/).map(word => {
     if (word.includes('#')) {
       // save word in location state to query all posts with same hashtag on search path
@@ -85,8 +92,8 @@ function UserPost(props) {
       <PostCard
         username={user.username}
         description={descriptionHashTags}
-        avatar={ <Avatar size="40" round="50px" name={user.username}/>}
-        images={ <ImagePost {...props} post={post} />}
+        avatar={ <Img className="user-avatar" url={avatar} alt="amazing me" />}
+        images={ <Img className="image-post" url={image} alt="beatiful you" />}
         />
         {/* show buttons only if it's currentUser's post */}
         { currentUser.id === postId ?

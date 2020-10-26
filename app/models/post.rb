@@ -3,11 +3,13 @@ class Post < ApplicationRecord
   has_one_attached :image
   has_many :post_hash_tags
 
-  # relation many-to-many between models Post and HashTag using the third model PostHashTags
-  has_many :hash_tags, through: :post_hash_tags
 
+  # a post must have an image associated as attachment
+  validates :image, presence: true
   # a post must have a description
   validates :description, presence: true
+  # relation many-to-many between models Post and HashTag using the third model PostHashTags
+  has_many :hash_tags, through: :post_hash_tags
 
   # create an hashtag when a post is created
   after_commit :create_hash_tags, on: :create

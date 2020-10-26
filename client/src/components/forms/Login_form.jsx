@@ -78,6 +78,7 @@ const LoginForm = (props) => {
                 placeholder=""
                 value={values.username}
                 handleChange={handleChange}
+                required
               />
             </div>
             <div className="form-group">
@@ -94,6 +95,7 @@ const LoginForm = (props) => {
                 placeholder=""
                 value={values.email}
                 handleChange={handleChange}
+                required
               />
             </div>
             <div className="form-group">
@@ -110,6 +112,7 @@ const LoginForm = (props) => {
                 placeholder=""
                 value={values.password}
                 handleChange={handleChange}
+                required
               />
             </div>
             <div className="form-check">

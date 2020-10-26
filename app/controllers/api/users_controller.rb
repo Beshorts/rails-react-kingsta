@@ -11,12 +11,21 @@ class Api::UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
-    @posts = @user.posts.order(created_at: :desc)
+    # find all posts with an image attached
+    @posts = @user.posts.with_attached_image.order(created_at: :desc)
+    # create images url of active storage attachments
+    @attachment = @posts.map { |item| url_for(item.image)}
+    @image = @attachment.each { |elem| elem }
+    @avatar = @user.avatar
+    # create avatar url of active storage attachment
+    @avatar_url = url_for(@user.avatar)
+
     if @user
-      render json: { user: @user, posts: @posts }
+      render json: { user: @user, posts: @posts, images: @image, avatar: @avatar_url }
     else
-      render json: { status: 500, errors: ['somehing went wrong!'] }
+      render json: { status: 500, errors: ['something went wrong!'] }
     end
+
   end
 
   def create
@@ -31,17 +40,23 @@ class Api::UsersController < ApplicationController
 
   def edit
     @user = User.find(params[:id])
-    if @user
-      render json: { status: :updated, user: @user }
-    else
-      render json: { status: 500, errors: ['sorry something went wrong'] }
-    end
   end
 
+  def update
+    if @user = User.find(params[:id])
+      @user.update_columns(bio: params[:bio], city: params[:city])
+      @user.avatar.attached?
+      @user.avatar.attach(params[:avatar])
+      @avatar_url = url_for(@user.avatar)
+      render json: { status: :updated, user: @user, avatar: @avatar_url }
+    else
+      render json: { status: 500, errors: ['please try again'] }
+    end
+  end
 
   private
 
   def user_params
-    params.require(:user).permit(:username, :email, :password, :password_confirmation, :bio, :city)
+    params.require(:user).permit(:username, :email, :password, :password_confirmation, :bio, :city, :avatar)
   end
 end

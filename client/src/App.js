@@ -15,14 +15,16 @@ import Home from './components/homepage/Home';
 import Navbar from './components/navigations/navbar/Navbar';
 import UserNavActions from './components/navigations/nav_actions/User_nav_actions';
 // registrations components
-import LoginForm from './components/registrations/Login_form';
-import SignupForm from './components/registrations/Signup_form';
+import LoginForm from './components/forms/Login_form';
+import SignupForm from './components/forms/Signup_form';
+import UpdateForm from './components/forms/Update_form';
+import CreatePostForm from './components/forms/Create_post_form';
+
 // user components
 import UserProfile from './components/users/User_profile';
 // posts components
 import UserPostsIndex from './components/posts/posts_index/User_posts_index';
 import UserPost from './components/posts/user_post/User_post';
-import CreatePost from './components/posts/Create_post';
 import PostsSearched from './components/posts/posts_searched/Posts_searched';
 
 // import fontawesome library
@@ -44,6 +46,7 @@ import { faCompass,
          faEllipsisH,
          faComment,
          faPaperPlane,
+         faImage,
         }from '@fortawesome/free-solid-svg-icons'
 
 library.add(fab,
@@ -63,7 +66,10 @@ library.add(fab,
             faEllipsisH,
             faComment,
             faPaperPlane,
+            faImage,
           )
+
+
 const App = (props) => {
 
   const [ isLoggedIn, setIsLoggedIn ] = useState(false);
@@ -71,7 +77,7 @@ const App = (props) => {
 
   /* this response data maintain the logged in status in React
      WITHCREDENTIALS allows Rails server to set and read cookies on front-end's browser
-     using localStorage to persist login status user on refresh pages */
+     using localStorage to persist user login status on refresh pages */
   const loginStatus = () => {
     axios.get('/api/logged_in', {withCredentials: true})
       .then(response => {
@@ -86,7 +92,7 @@ const App = (props) => {
         }
       }).catch(error => console.log('Something went wrong:', error));
   };
-// call loginstatus function on refresh page
+// call loginstatus function on refresh page to keep current user logged
 useEffect(() => {
   loginStatus();
 // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -139,7 +145,14 @@ useEffect(() => {
           )}
         />
         <Route
-        // currrent user profile shows current user info and posts created
+          // update currentUser info as bio and city
+          path='/users/:userId/update'
+          render={props => (
+            <UpdateForm {...props} user={user} handleLogin={handleLogin} loggedInStatus={isLoggedIn} />
+         )}
+        />
+        <Route
+          // currrent user profile shows current user info and posts created
           path='/users/:userId'
           component={props =>(
             <UserProfileLayout handleLogin={handleLogin} loggedInStatus={isLoggedIn}
@@ -150,17 +163,17 @@ useEffect(() => {
           )}
         />
         <Route
-          // see new currentUser post created / destroy it
-            path='/posts/:postId'
-            render={props => (
-              <UserPost {...props} currentUser={user}  loggedInStatus={isLoggedIn} />
-            )}
-          />
-          <Route
           // create a new current user post
             path='/new_post'
             render={props => (
-              <CreatePost {...props} user={user} loggedInStatus={isLoggedIn} />
+              <CreatePostForm {...props} user={user} loggedInStatus={isLoggedIn} />
+            )}
+          />
+        <Route
+          // see Users and CurrentUser post on cick
+            path='/posts/:postId'
+            render={props => (
+              <UserPost {...props} currentUser={user}  loggedInStatus={isLoggedIn} />
             )}
           />
           <Route

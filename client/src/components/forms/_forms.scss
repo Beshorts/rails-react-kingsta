@@ -1,5 +1,11 @@
+// style all input field placeholders
+input-field::placeholder {
+  font-size: 0.8em !important;
+  opacity: 0.4 !important;
+  font-weight: 800 !important;
+}
 
-// UI rules for signup and login forms
+// scss for all forms
 .registration-forms-container {
   margin-top: 3rem;
   .registration-form {
@@ -20,6 +26,7 @@
       font-weight: $OSextra-bold;
       font-size: 1.8em;
     }
+    // for signup and signin forms
     .go-to-link {
       color: $costumblue;
       font-weight: $OSbold;
@@ -32,6 +39,7 @@
         color: blue;
       }
     }
+    // for signup and signin forms
     .forgot-password {
       color: $text;
       font-family: 'Great Vibes', cursive;
@@ -65,8 +73,27 @@
   } //close registration-form
 } // close registration-forms-container
 
-input-field::placeholder {
-  font-size: 0.8em !important;
-  opacity: 0.4 !important;
-  font-weight: 800 !important;
+// create_post form
+.loading-text {
+  width: 100%;
+  height: 300px;
+}
+
+// update form
+.avatar-post-preview {
+  border-radius: 50%;
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+}
+.preview-avatar {
+  border-radius: 50%;
+  width: 100px;
+  height: 100px;
+  background-color: $lighttext;
+  .preview-avatar-icon {
+     color: white;
+    font-size: 3em;
+  }
+
 }

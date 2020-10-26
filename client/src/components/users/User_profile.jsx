@@ -6,7 +6,7 @@ import axios from 'axios';
 import ProfileUserCard from '../elements/profile_card/Profile_user_card';
 
 // import library to generate avatars
-import Avatar from 'react-avatar';
+import Img from '../elements/Img';
 
 function UserProfile(props) {
 
@@ -14,6 +14,7 @@ function UserProfile(props) {
   const [error, setError] = useState(false);
   // eslint-disable-next-line no-unused-vars
   const [loading, setLoading] = useState(false);
+  const [avatar, setAvatar] = useState('');
 
   useEffect(() => {
 
@@ -27,7 +28,8 @@ function UserProfile(props) {
           setLoading(true);
           setError(false);
           setUser(response.data.user);
-          console.log(response.data.user)
+          setAvatar(response.data.avatar)
+          console.log(response.data)
         }
       })
       .catch((error) => {
@@ -60,12 +62,15 @@ function UserProfile(props) {
                       </h5>
                     </div>
   } else {
-    userContainer = <ProfileUserCard
-                      avatar={ <Avatar size="70" round="50px" name={user.username}/> }
+    userContainer = <div>
+                    <ProfileUserCard
+                      user={user}
+                      avatar={ <Img className="profile-avatar-img" url={avatar} alt="a beautiful bubu" /> }
                       username={user.username}
                       bio={user.bio}
                       city={user.city}
                     />
+                    </div>
   }
 
   return (
