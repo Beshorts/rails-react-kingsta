@@ -4,8 +4,7 @@ import { Route } from 'react-router-dom';
 
 // logic for custom routes to render correct layouts on login and signup path
 const AppRoutes = ({
-  component: Component, layout: Layout,
-  ...rest}) =>  {
+  component: Component, layout: Layout, ...rest}) =>  {
   return (
     <Route {...rest} render={(props) => (
       <Layout>

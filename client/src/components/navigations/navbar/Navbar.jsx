@@ -1,26 +1,27 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 
 import axios from 'axios';
 
 import { NavLink, withRouter, Link } from 'react-router-dom';
 
+// import context
+import UserLogContext from '../../../contexts/UserLogContext';
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-// import element
 import SearchBar from './Search_bar';
 
 function Navbar(props) {
 
-  const { loggedInStatus } = props;
-  const {currentUser} = props;
+  // consume context
+  const {currentUser, handleLogout,isLoggedIn} = useContext(UserLogContext);
+
   const [query, setQuery] = useState('');
-
-
 
   // update state with current input in search bar
   const handleSearch = (event)=> {
     event.preventDefault();
-    loggedInStatus ? setQuery(event.target.value) : props.history.push('/signup');
+    isLoggedIn ? setQuery(event.target.value) : props.history.push('/signup');
   }
 
   // and store query input state in props location
@@ -29,24 +30,25 @@ function Navbar(props) {
       pathname: '/search',
       state: event.target.value
     }
-    // on press return keyboard (key code 13) redirect on search page
-    // and set clear input field
+    /* on press return keyboard (key code 13) redirect on search page
+       and set clear input field */
     if (event.keyCode === 13) {
       props.history.push(location);
       setQuery('');
       event.preventDefault();
     }
   }
-  // call handleLogout fucntion from App.js
-  // server request triggers sessions_controller destroy in Rails and clear localSotrage in browser
+  /* call handleLogout fucntion from App.js
+     server request triggers sessions_controller destroy in Rails
+     and clear localSotrage in browser */
   const handleClick = () => {
-      axios.delete('/api/logout', {withCredentials: true})
-        .then(response => {
-          props.handleLogout();
-          localStorage.clear();
-        })
-        .catch(error => console.log(error));
-      }
+    axios.delete('/api/logout', {withCredentials: true})
+    .then(response => {
+      handleLogout();
+      localStorage.clear();
+    })
+    .catch(error => console.log(error));
+  }
 
   // using withRouter location.pathname to hide Navbar on specific pages
   // eslint-disable-next-line no-restricted-globals
@@ -54,7 +56,7 @@ function Navbar(props) {
     return false;
   }
 
-// style NavLink icons
+  // style NavLink icons on active and unactive behaviours
   const iconColor = {
     color: "rgba(9, 4, 70, 1)"
   }
@@ -64,7 +66,7 @@ function Navbar(props) {
 
   // using loggedInStatus to show and hide icons depends on user log
   return (
-    <nav className="navbar fixed-top navbar-expand-md navbar-light bg-white static-top" >
+    <nav className="navbar fixed-top navbar-expand-md navbar-light bg-white static-top " >
       <div className="container d-flex justify-content-between pt-4 pb-2">
         <Link to='/' >
           <div className="navbar-brand">
@@ -77,7 +79,7 @@ function Navbar(props) {
           onChange={handleSearch}
           onKeyDown={handleSearchSubmit}
         />
-        { loggedInStatus ?
+        { isLoggedIn ?
           <button
             className="navbar-toggler "
             type="button"
@@ -89,7 +91,7 @@ function Navbar(props) {
           <span className="navbar-toggler-icon"></span>
           </button>
         : null }
-        { loggedInStatus ?
+        { isLoggedIn ?
           <div className="collapse navbar-collapse col-md-3 col-lg-2 px-0" id="navbarSupportedContent" >
             <ul className="navbar-nav ml-auto" >
                {/* add data-toggle and data-target on all nav-item to close navbar toggler on click */}
@@ -109,7 +111,7 @@ function Navbar(props) {
                   </NavLink>
               </li>
               <li className="nav-item">
-                { loggedInStatus ?
+                { isLoggedIn ?
                   <NavLink to='/' className="nav-link" onClick={handleClick} style={iconColor} >
                     <FontAwesomeIcon className="navbar-icon logout" icon="sign-out-alt"/>
                   </NavLink>

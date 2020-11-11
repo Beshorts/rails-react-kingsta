@@ -13,12 +13,8 @@
     }
     .homepage-image {
       margin-top: 4rem;
-      width: 21.5rem;
-      @include for-mobile-m {
-        margin-top: 3rem;
-        width: 23.75rem;
-      }
-      @include for-mobile-l {
+      width: 23rem;
+      @include for-mobile-xl {
         justify-self: center;
         width: 26.5rem;
       }

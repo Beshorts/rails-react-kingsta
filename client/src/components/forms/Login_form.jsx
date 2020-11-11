@@ -1,17 +1,21 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+
 import axios from 'axios';
+
+// import initialized context
+import UserLogContext from '../../contexts/UserLogContext';
 
 import { Link } from 'react-router-dom';
 
-// import custom Hook for registrations forms
-import useForm from '../elements/use_form';
 
 // import elements
 import InputField from '../elements/Input_field';
 import Button from '../elements/button/Button';
+import useForm from '../elements/use_form';
 
 const LoginForm = (props) => {
 
+ const {handleLogin} = useContext(UserLogContext);
    // set initial state for user's keys
    const { values, handleChange, handleSubmit } = useForm({
      username: "",
@@ -37,7 +41,7 @@ const LoginForm = (props) => {
         // store data in localStorage to keep user login session on reload page
         localStorage.setItem('userSession', JSON.stringify(response.data.logged_in));
         localStorage.setItem('currentUser', JSON.stringify({user: {id: response.data.user.id, username: response.data.user.username}}));
-        props.handleLogin(response.data);
+        handleLogin(response.data);
         console.log(response.data);
         props.history.push(`/users/${response.data.user.id}`);
       } else {
@@ -78,6 +82,7 @@ const LoginForm = (props) => {
                 placeholder=""
                 value={values.username}
                 handleChange={handleChange}
+                required
               />
             </div>
             <div className="form-group">
@@ -94,6 +99,7 @@ const LoginForm = (props) => {
                 placeholder=""
                 value={values.email}
                 handleChange={handleChange}
+                required
               />
             </div>
             <div className="form-group">
@@ -110,6 +116,7 @@ const LoginForm = (props) => {
                 placeholder=""
                 value={values.password}
                 handleChange={handleChange}
+                required
               />
             </div>
             <div className="form-check">
@@ -129,7 +136,7 @@ const LoginForm = (props) => {
             </div>
           </div>
         </form>
-        <div className="errors col-12 mb-2">
+        <div className="errors col-12 mb-2 mt-3">
           {errors &&
            <div className="form-error">{errors.map((error) => {
             return  <div className="alert alert-warning"

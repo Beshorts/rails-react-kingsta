@@ -4,6 +4,7 @@ import { useState } from 'react';
 const useForm = (initialValues, callback) => {
 
   const [values, setValues] = useState(initialValues);
+
 /* callback is the function passed in custom Hook form component (SignupSubmit)
 and will be call whenever the form submits */
   const handleSubmit = (event) => {
@@ -15,7 +16,11 @@ and will be call whenever the form submits */
 // function handles input changes
   const handleChange = (event) => {
     event.persist();
+    if (event.target.type === 'file'){
+      setValues(values => ({...values, [event.target.name]: event.target.files[0]}))
+    } else {
     setValues(values => ({ ...values, [event.target.name]: event.target.value }));
+   }
   };
 
 // returns functions to be accessible from component SignupForm and LoginForm
@@ -23,7 +28,7 @@ and will be call whenever the form submits */
     handleChange,
     handleSubmit,
     values,
-    setValues
+    setValues,
   }
 };
 

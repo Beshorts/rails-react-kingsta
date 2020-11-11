@@ -1,0 +1,8 @@
+.container-loading {
+  display: grid;
+  .loading-element {
+    padding-top: 11.75rem;
+    font-weight: $OSbold;
+    color: $lightbluetext;
+  }
+}

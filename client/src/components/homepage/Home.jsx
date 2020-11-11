@@ -18,9 +18,9 @@ return (
             <span className=" logo-brand-2">insta</span>
           </header>
           <main className="homepage-text">
-            <p className="paragraph mb-0">signup and create your <strong>user profile
-            </strong>, login logout, write <strong>posts</strong>,
-            search by <strong>hastags</strong>, delete.
+            <p className="paragraph mb-0">signup, create and update your <strong>user profile
+              </strong>, login logout, write <strong>posts</strong>, upload <strong>images</strong>,
+              search by <strong>hastags</strong>, delete.
             </p>
           </main>
           <Link to='/signup'>

@@ -1,17 +1,20 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 
 import axios from 'axios';
 
 import {Link} from 'react-router-dom';
 
-// import custom Hook for registration forms
-import useForm from '../elements/use_form';
+// import initialized context
+import UserLogContext from '../../contexts/UserLogContext';
 
 // import elements
 import InputField from '../elements/Input_field';
 import Button from '../elements/button/Button';
+import useForm from '../elements/use_form';
 
 const SignupForm = (props) => {
+
+ const {handleLogin} = useContext(UserLogContext);
 
   // set initial state for user's keys
   const { values, handleChange, handleSubmit} = useForm({
@@ -31,8 +34,6 @@ const SignupForm = (props) => {
     let user = {
       username: values.username,
       email: values.email,
-      bio: values.bio,
-      city: values.city,
       password: values.password,
       password_confirmation: values.password_confirmation,
     }
@@ -43,9 +44,9 @@ const SignupForm = (props) => {
       if (response.data.status === 'created') {
         localStorage.setItem('userSession', 'true');
         localStorage.setItem('currentUser', JSON.stringify({user: {id: response.data.user.id, username: response.data.user.username}}));
-        props.handleLogin(response.data);
+        handleLogin(response.data);
         console.log(response.data.user);
-        props.history.push(`/users/${response.data.user.id}`);
+        props.history.push(`/users/${response.data.user.id}/update`);
       } else  {
         setErrors(response.data.errors);
        console.log(response.data.errors);
@@ -87,6 +88,7 @@ const SignupForm = (props) => {
                 placeholder=""
                 value={values.username}
                 handleChange={handleChange}
+                required
               />
             </div>
             <div className="form-group">
@@ -106,43 +108,9 @@ const SignupForm = (props) => {
                 placeholder=""
                 value={values.email}
                 handleChange={handleChange}
+                required
               />
             </div>
-             <div className="form-group">
-                <label className="input-password d-flex justify-content-between my-0">
-                  <p className="input-title mb-1 mt-3">
-                    bio
-                  </p>
-                  <p className="suggestion-text mb-0 align-self-end">
-                    (example: writer / dreamer)
-                  </p>
-                </label>
-                <InputField
-                  className="form-control"
-                  type="text"
-                  name="bio"
-                  autoComplete="bio"
-                  placeholder=""
-                  value={values.bio || ''}
-                  handleChange={handleChange}
-                />
-              </div>
-              <div className="form-group">
-                <label className="input-password my-0">
-                  <p className="input-title mb-1 mt-3">
-                    city
-                  </p>
-                </label>
-                <InputField
-                  className="form-control"
-                  type="text"
-                  name="city"
-                  autoComplete="city"
-                  placeholder=""
-                  value={values.city || ''}
-                  handleChange={handleChange}
-                />
-              </div>
             <div className="form-group">
               <label className="input-password d-flex justify-content-between my-0">
                 <p className="input-title mb-1 mt-3">
@@ -190,7 +158,7 @@ const SignupForm = (props) => {
             </div>
           </div>
         </form>
-        <div className="errors col-12 mb-2">
+        <div className="errors col-12 mb-2 mt-3">
           {errors && <div className="form-error">{errors.map((error) => {
             return <div className="alert alert-warning"
                         role="alert"

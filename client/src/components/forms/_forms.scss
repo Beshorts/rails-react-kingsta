@@ -1,5 +1,11 @@
+// style all input field placeholders
+input-field::placeholder {
+  font-size: 0.8em !important;
+  opacity: 0.4 !important;
+  font-weight: 800 !important;
+}
 
-// UI rules for signup and login forms
+// scss for all forms
 .registration-forms-container {
   margin-top: 3rem;
   .registration-form {
@@ -20,6 +26,7 @@
       font-weight: $OSextra-bold;
       font-size: 1.8em;
     }
+    // custom for signup and signin forms
     .go-to-link {
       color: $costumblue;
       font-weight: $OSbold;
@@ -65,8 +72,6 @@
   } //close registration-form
 } // close registration-forms-container
 
-input-field::placeholder {
-  font-size: 0.8em !important;
-  opacity: 0.4 !important;
-  font-weight: 800 !important;
-}
+
+
+
