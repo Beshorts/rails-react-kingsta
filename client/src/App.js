@@ -1,29 +1,26 @@
 import React, { useState, useEffect } from 'react';
+
 import axios from 'axios';
+
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 
 // custom routes to render layout for login and signup path
 import AppRoutes from './custom_routes/App_routes';
 
+// import initialized context
+import UserLogContext from './contexts/UserLogContext';
+
 // import custom layouts
 import RegistrationsLayout from './components/layouts/registrations_layout/Registrations_layout';
-import UserProfileLayout from './components/layouts/user_profile_layout/User_profile_layout';
 
 // import components
 import Home from './components/homepage/Home';
-// navigations components
 import Navbar from './components/navigations/navbar/Navbar';
-import UserNavActions from './components/navigations/nav_actions/User_nav_actions';
-// registrations components
 import LoginForm from './components/forms/Login_form';
 import SignupForm from './components/forms/Signup_form';
 import UpdateForm from './components/forms/Update_form';
 import CreatePostForm from './components/forms/Create_post_form';
-
-// user components
 import UserProfile from './components/users/User_profile';
-// posts components
-import UserPostsIndex from './components/posts/posts_index/User_posts_index';
 import UserPost from './components/posts/user_post/User_post';
 import PostsSearched from './components/posts/posts_searched/Posts_searched';
 
@@ -73,16 +70,16 @@ library.add(fab,
 const App = (props) => {
 
   const [ isLoggedIn, setIsLoggedIn ] = useState(false);
-  const [ user, setUser ] = useState({});
+  const [ currentUser, setCurrentUser ] = useState({});
 
   /* this response data maintain the logged in status in React
      WITHCREDENTIALS allows Rails server to set and read cookies on front-end's browser
      using localStorage to persist user login status on refresh pages */
-  const loginStatus = () => {
-    axios.get('/api/logged_in', {withCredentials: true})
-      .then(response => {
+  const loginStatus = async () => {
+    try {
+      const response = await axios.get('/api/logged_in',{currentUser}, {withCredentials: true})
         console.log(response.data.logged_in);
-        console.log(response);
+        console.log(response.data);
         if (response.data.logged_in) {
           handleLogin(response.data);
         } else if (localStorage.userSession) {
@@ -90,97 +87,103 @@ const App = (props) => {
         } else {
           handleLogout();
         }
-      }).catch(error => console.log('Something went wrong:', error));
+    } catch(error) {
+        throw new Error ('something went wrong');
+    }
   };
-// call loginstatus function on refresh page to keep current user logged
-useEffect(() => {
-  loginStatus();
-// eslint-disable-next-line react-hooks/exhaustive-deps
-}, []);
+
+  useEffect(() => {
+    loginStatus(currentUser);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   // logic for current user logs
   const handleLogin = (data) => {
     setIsLoggedIn(true);
-    setUser(data.user);
-    console.log(data);
+    setCurrentUser(data.user);
+    console.log(data.user);
   };
   // logout user acion logic in Navbar, destroy user session in local storage too.
   const handleLogout = () => {
     setIsLoggedIn(false);
-    setUser({});
+    setCurrentUser({});
   };
 
   return (
     <div className="App">
     <Router>
-      {/* navbar available on all paths see exception  paths on navbar.js */}
-      <Navbar  currentUser={user} handleLogin={handleLogin} handleLogout={handleLogout} loggedInStatus={isLoggedIn} />
+      {/* navbar available on all paths see exception paths on navbar.js
+          create context provider to handle user logs */}
+      <UserLogContext.Provider value={{currentUser, handleLogout, isLoggedIn}} >
+        <Navbar />
+      </UserLogContext.Provider>
       <Switch>
          <Route
             exact path='/'
             render={props => (
-              <Home {...props} loggedInStatus={isLoggedIn}/>
+              <Home {...props} />
             )}
           />
         <AppRoutes
         // custom routes to render correct layouts on login and signup path
         // login user who already signup
           path='/login'
-          layout={props => (
-            <RegistrationsLayout { ...props} />
-          )}
+          layout={props => <UserLogContext.Provider value={{handleLogin}} >
+                             <RegistrationsLayout { ...props} />
+                           </UserLogContext.Provider>
+                 }
           component={props => (
-            <LoginForm {...props} handleLogin={handleLogin} loggedInStatus={isLoggedIn}/>
+            <LoginForm {...props} />
           )}
         />
         <AppRoutes
            // custom routes to render correct layouts on login and signup path
           // create a new user
           path='/signup'
-          layout={props => (
-            <RegistrationsLayout { ...props} />
-          )}
+          layout={props => <UserLogContext.Provider value={{handleLogin}} >
+                             <RegistrationsLayout { ...props} />
+                           </UserLogContext.Provider>
+                 }
           component={props => (
-            <SignupForm {...props} handleLogin={handleLogin} loggedInStatus={isLoggedIn}/>
+            <SignupForm {...props} />
           )}
         />
         <Route
           // update currentUser info as bio and city
           path='/users/:userId/update'
           render={props => (
-            <UpdateForm {...props} user={user} handleLogin={handleLogin} loggedInStatus={isLoggedIn} />
+            <UpdateForm {...props} />
          )}
         />
         <Route
-          // currrent user profile shows current user info and posts created
+          // show current user info - nested routes to show user posts and their associated images
           path='/users/:userId'
-          component={props =>(
-            <UserProfileLayout handleLogin={handleLogin} loggedInStatus={isLoggedIn}
-              user={ <UserProfile {...props} user={user} loggedInStatus={isLoggedIn} />}
-              navigation={ <UserNavActions {...props} />}
-              posts={ <UserPostsIndex {...props}  loggedInStatus={isLoggedIn} />}
+          render={props =>(
+            <UserProfile {...props}
             />
           )}
         />
         <Route
           // create a new current user post
             path='/new_post'
-            render={props => (
-              <CreatePostForm {...props} user={user} loggedInStatus={isLoggedIn} />
-            )}
+            render={props => <UserLogContext.Provider value={{currentUser}}>
+                              <CreatePostForm {...props} />
+                             </UserLogContext.Provider>
+                   }
           />
         <Route
-          // see Users and CurrentUser post on cick
+          // see users and currentUser post on cick
             path='/posts/:postId'
-            render={props => (
-              <UserPost {...props} currentUser={user}  loggedInStatus={isLoggedIn} />
-            )}
+            render={props => <UserLogContext.Provider value={{currentUser}}>
+                               <UserPost {...props}  />
+                             </UserLogContext.Provider>
+                   }
           />
           <Route
-          // results of filtered posts searched by hashtags
+          // show results of filtered posts searched by hashtags
             path='/search'
             render={props => (
-              <PostsSearched {...props} loggedInStatus={isLoggedIn} />
+              <PostsSearched {...props} />
             )}
           />
       </Switch>

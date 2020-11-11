@@ -2,52 +2,86 @@ import React, {useState} from 'react';
 
 import axios from 'axios';
 
-import {Link} from 'react-router-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-
-// import custom Hook for signup and login forms
-import useForm from '../elements/use_form';
 
 // import elements
 import InputField from '../elements/Input_field';
 import Button from '../elements/button/Button';
-import Img from '../elements/Img';
+import useForm from '../elements/use_form';
+import Loading from '../elements/loading/Loading';
+import ErrorMessage from '../elements/errors/error_message/Error_message';
 
 const UpdateForm = (props) => {
+
   const { values, setValues, handleChange, handleSubmit} = useForm({
     bio: "",
     city: "",
     avatar: null
-    }, UpdateUser);
+  }, UpdateUser);
 
-  // custom hooks to display error, preview image and loading state
+  // show error if post request failed
   const [error, setError] = useState(false);
-  // see image loading start
+  // show error if image is more than 2MB
+  const [sizeError, setSizeError] = useState(false)
+  // show error if a field is not filled
+  const [inputEmpty, setInputEmpty] = useState(false)
+  // show 'loading' when post request start
   const [loading, setLoading] = useState(false);
 
-   function UpdateUser() {
+  function UpdateUser() {
 
-   const formData = new FormData();
-   formData.append('bio', values.bio);
-   formData.append('city', values.city);
-   formData.append('avatar', values.avatar)
+  // use FormData to manage binary data file
+  const formData = new FormData();
 
-    const {userId} = props.match.params
-    axios.patch(`/api/users/${userId}`, formData, {withCredentials: true})
-    .then((response) => {
-       //setValues({bio: response.data.user.bio, city: response.data.user.city, avatar: response.data.avatar});
-      console.log(values.avatar);
-      console.log(response);
-      props.history.push(`/users/${userId}`);
-    })
-    .catch(error => console.log('error', error));
+  /* avatar field has to be filled before submit data
+     avatar size must be less or equal to 2MB */
+  if (values.avatar && values.avatar.size <= 2097152) {
+    formData.append('avatar', values.avatar)
+  } else {
+    setSizeError(true);
   }
+  formData.append('bio', values.bio);
+  formData.append('city', values.city);
+
+  const {userId} = props.match.params
+
+  // send post request if all fields are filled and avatar size is less than 2MB
+  if (values.avatar && values.bio && values.city && values.avatar.size <= 2097152) {
+    setInputEmpty(false);
+    setSizeError(false);
+    setError(false);
+    setLoading(true);
+    axios.patch(`/api/users/${userId}`, formData, {timeout: 15000, withCredentials: true})
+      .then(response => {
+        console.log(response.status);
+        if (response.data.status === 'updated') {
+          setValues(response.data);
+          setLoading(false);
+          setError(false);
+          props.history.push(`/users/${userId}`);
+        } else {
+          setLoading(false);
+          // show error on response failed
+          setError(true);
+        }
+        console.log(values.avatar);
+        console.log(response);
+      })
+    // catch error on request failed
+    .catch(error => {
+      setLoading(false);
+      setError(true);
+    });
+    } else {
+      setInputEmpty(true);
+    };
+  }; // close updateUser
 
 
   return (
     <div className="registration-forms-container mt-0">
       <div className="container container-form">
         <div className="row forms justify-content-center">
+        { loading ? <Loading /> :
           <form className="registration-form col-12 col-lg-8 mt-5">
             <div className="container-fluid form-header d-md-flex mt-5 ">
               <div className="container-title-link mr-auto d-flex justify-content-between mt-5">
@@ -69,44 +103,43 @@ const UpdateForm = (props) => {
                   name='avatar'
                   handleChange={handleChange}
                 />
-
               </div>
-            <div className="form-group">
-              <label className="input-password d-flex justify-content-between my-0">
-                <p className="input-title mb-1 mt-3">
-                  bio
-                </p>
-                <p className="suggestion-text mb-0 align-self-end">
-                  (example: writer / dreamer)
-                </p>
-              </label>
-              <InputField
-                className="form-control"
-                type="text"
-                name="bio"
-                autoComplete="bio"
-                placeholder=""
-                value={values.bio || ''}
-                handleChange={handleChange}
-              />
-            </div>
-            <div className="form-group">
-              <label className="input-password my-0">
-                <p className="input-title mb-1 mt-3">
-                  city
-                </p>
-              </label>
-              <InputField
-                className="form-control"
-                type="text"
-                name="city"
-                autoComplete="city"
-                placeholder=""
-                value={values.city || ''}
-                handleChange={handleChange}
-              />
-            </div>
-            <div className="btn-container d-flex justify-content-end">
+              <div className="form-group">
+                <label className="input-password d-flex justify-content-between my-0">
+                  <p className="input-title mb-1 mt-3">
+                    bio
+                  </p>
+                  <p className="suggestion-text mb-0 align-self-end">
+                    (example: writer / dreamer)
+                  </p>
+                </label>
+                <InputField
+                  className="form-control"
+                  type="text"
+                  name="bio"
+                  autoComplete="bio"
+                  placeholder=""
+                  value={values.bio || ''}
+                  handleChange={handleChange}
+                />
+              </div>
+              <div className="form-group">
+                <label className="input-password my-0">
+                  <p className="input-title mb-1 mt-3">
+                    city
+                  </p>
+                </label>
+                <InputField
+                  className="form-control"
+                  type="text"
+                  name="city"
+                  autoComplete="city"
+                  placeholder=""
+                  value={values.city || ''}
+                  handleChange={handleChange}
+                />
+              </div>
+              <div className="btn-container d-flex justify-content-end">
                 <Button
                   theme="primary"
                   type="submit"
@@ -117,18 +150,29 @@ const UpdateForm = (props) => {
               </div>
             </div>
           </form>
-           <div className="errors col-12 mb-2">
-             {error &&
-              <div className="form-error">
-                <div className="alert alert-warning"
-                     role="alert"
-                     key={error}>
-                  <p className=" alert-text mb-0" >
-                    description cannot be blank
-                  </p>
-                </div>
+         }
+         <div className="errors col-12 mb-2 mt-3">
+           { sizeError &&
+            <div className="form-error">
+              <div className="alert alert-warning mt-3 "
+                   role="alert">
+                <p className=" alert-text mb-0" >
+                  choose an image less than 2MB
+                </p>
               </div>
-             }
+            </div>
+           }
+           { inputEmpty &&
+            <div className="form-error">
+              <div className="alert alert-warning mt-3 "
+                   role="alert">
+                <p className=" alert-text mb-0" >
+                  fields cannot be blank!
+                </p>
+              </div>
+            </div>
+           }
+           { error ? <ErrorMessage /> : null }
           </div>
         </div>
       </div>

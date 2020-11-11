@@ -21,11 +21,10 @@ class Api::UsersController < ApplicationController
     @avatar_url = url_for(@user.avatar)
 
     if @user
-      render json: { user: @user, posts: @posts, images: @image, avatar: @avatar_url }
+      render json: { status: 200, user: @user, posts: @posts, images: @image, avatar: @avatar_url }
     else
-      render json: { status: 500, errors: ['something went wrong!'] }
+      render json: { status: 500, error: ['something went wrong!'] }
     end
-
   end
 
   def create
@@ -43,14 +42,15 @@ class Api::UsersController < ApplicationController
   end
 
   def update
-    if @user = User.find(params[:id])
+    @user = User.find(params[:id])
+    @user.avatar.attach(params[:avatar])
+    @avatar_url = url_for(@user.avatar)
+    # update user info only if an image is attached, if not throw error
+    if @user.avatar.attached?
       @user.update_columns(bio: params[:bio], city: params[:city])
-      @user.avatar.attached?
-      @user.avatar.attach(params[:avatar])
-      @avatar_url = url_for(@user.avatar)
       render json: { status: :updated, user: @user, avatar: @avatar_url }
     else
-      render json: { status: 500, errors: ['please try again'] }
+      render json: { status: 500, error: ['Upload failed! Please try again'] }
     end
   end
 

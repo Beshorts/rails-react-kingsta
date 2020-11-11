@@ -1,17 +1,20 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 
 import axios from 'axios';
 
 import {Link} from 'react-router-dom';
 
-// import custom Hook for registration forms
-import useForm from '../elements/use_form';
+// import initialized context
+import UserLogContext from '../../contexts/UserLogContext';
 
 // import elements
 import InputField from '../elements/Input_field';
 import Button from '../elements/button/Button';
+import useForm from '../elements/use_form';
 
 const SignupForm = (props) => {
+
+ const {handleLogin} = useContext(UserLogContext);
 
   // set initial state for user's keys
   const { values, handleChange, handleSubmit} = useForm({
@@ -41,7 +44,7 @@ const SignupForm = (props) => {
       if (response.data.status === 'created') {
         localStorage.setItem('userSession', 'true');
         localStorage.setItem('currentUser', JSON.stringify({user: {id: response.data.user.id, username: response.data.user.username}}));
-        props.handleLogin(response.data);
+        handleLogin(response.data);
         console.log(response.data.user);
         props.history.push(`/users/${response.data.user.id}/update`);
       } else  {
@@ -155,7 +158,7 @@ const SignupForm = (props) => {
             </div>
           </div>
         </form>
-        <div className="errors col-12 mb-2">
+        <div className="errors col-12 mb-2 mt-3">
           {errors && <div className="form-error">{errors.map((error) => {
             return <div className="alert alert-warning"
                         role="alert"

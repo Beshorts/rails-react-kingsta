@@ -27,8 +27,13 @@ const PostCard = (props) => {
             <FontAwesomeIcon className="body-action" icon="comment" />
             <FontAwesomeIcon className="body-action" icon="paper-plane" />
           </div>
-          <h6 className="username-description-texts mb-3 mt-3"><span className="user-username-body">{props.username}</span>
-            <span className="post-description">{props.description}</span>
+          <h6 className="username-description-texts mb-3 mt-3">
+            <span className="user-username-body">
+              {props.username}
+            </span>
+            <span className="post-description">
+              {props.description}
+            </span>
           </h6>
         </main>
       </div>

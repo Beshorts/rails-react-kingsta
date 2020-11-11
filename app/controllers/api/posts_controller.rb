@@ -2,15 +2,17 @@ class Api::PostsController < ApplicationController
 
 
   def create
-    @post = Post.create(post_params)
+    @post = Post.new(post_params)
     # attach an image to post
     @post.image.attach(params[:image])
     # create image url of active storage attachment
     @image_url = url_for(@post.image)
-    if @post.save
-      render json: { status: :created, post: @post, image: @image_url }
+    # save new post only if image is attached or set error
+    if @post.image.attached?
+       @post.save
+       render json: { status: :created, post: @post, image: @image_url }
     else
-      render json: { status: 500, errors: @post.errors.full_messages }
+      render json: { status: 500, error: ['Upload failed! Please try again'] }
 
     end
   end
@@ -25,8 +27,9 @@ class Api::PostsController < ApplicationController
     # create image url of active storage attachment
     @image_url = url_for(@post.image)
     if @post
-      render json: { post: @post, user: @user, avatar: @avatar_url, image: @image_url }
-    else { status: 500, errors: ['something went wrong!'] }
+      render json: { status: 200, post: @post, user: @user, avatar: @avatar_url, image: @image_url }
+    else
+      render json: { status: 500, error: ['something went wrong, please try again!'] }
     end
   end
 
@@ -39,6 +42,6 @@ class Api::PostsController < ApplicationController
   private
 
   def post_params
-    params.permit(:description, :user_id, :image)
+    params.require(:post).permit(:description, :user_id, :image)
   end
 end

@@ -1,5 +1,5 @@
 .container-infos-actions {
-  margin-top: 8rem;
+  margin-top: 9rem;
   display: grid;
   grid-template-columns: auto auto;
   grid-template-rows: auto;
@@ -12,8 +12,8 @@
     justify-self: end;
     .profile-avatar-img {
       border-radius: 50%;
-      height: 70px;
-      width: 70px;
+      height: 5.375rem;
+      width: 5.375rem;
       object-fit: cover;
       box-shadow: 0 2px 6px rgba(0,0,0,0.3);
     }
@@ -69,7 +69,7 @@
     }
     p {
        color: white;
-        margin-left: 3px;
+        margin-left: 0.1875rem;
         font-weight: $OSsemi-bold;
     }
     .user-manage-profile {
@@ -77,7 +77,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      padding: 6px 12px;
+      padding: 0.375rem 0.75rem;
       border-radius: 4px;
       background: $purple;
       transition: background 0.3s ease;
@@ -93,7 +93,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      padding: 6px 20px;
+      padding: 0.375rem 1.26rem;
       border-radius: 4px;
       background: $green;
       margin-left: 2.25rem;

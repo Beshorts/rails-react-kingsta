@@ -4,7 +4,7 @@ This app is built on a Rails backend setup to serve as an API end point for CRUD
 React as frontend, using React Hooks to manage state through reusable components and React Router to implement nested routes.
 
 ##### Usage
-Mobile responsive app that allows users to signup or signin, create a profile, logout, write a post with description and hashtags, search by hashtags, delete.
+Mobile responsive app that allows users to signup or signin, create a profile, logout, upload avatar and images, write a post with description and hashtags, search by hashtags, delete.
 
 SVG files designed by [https://www.opendoodles.com/](https://www.opendoodles.com/)
 

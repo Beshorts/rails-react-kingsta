@@ -13,6 +13,7 @@
 @import '../components/elements/button/_button.scss';
 @import '../components/elements/profile_card/_user_profile_card.scss';
 @import '../components/elements/post_card/_post_card.scss';
+@import '../components/elements/loading/_loading.scss';
 
 // import scss of each component
 @import '../components/forms/_forms.scss';
@@ -21,5 +22,4 @@
 @import '../components/navigations/nav_actions/_user_nav_actions.scss';
 @import '../components/posts/posts_index/_user_posts_index.scss';
 @import '../components/posts/posts_searched/_posts_searched.scss';
-@import '../components/uploads_files/_upload_images.scss';
-
+@import '../components/users/_user_profile.scss';

@@ -1,8 +1,8 @@
 // add google fonts
 @import url("https://fonts.googleapis.com/css2?family=Great+Vibes&family=Open+Sans:wght@300;400;600;700;800&display=swap");
 
-//font-family: 'Great Vibes', cursive;
-//font-family: 'Open Sans', sans-serif;
+/* font-family: 'Great Vibes', cursive;
+   font-family: 'Open Sans', sans-serif; */
 
 // Open Sans font weight global variables
 $OSlight: 300;
@@ -61,6 +61,6 @@ h1, h2, h3, h4, h5, h6, p, a, span  {
   color: $text;
 }
 
-// Import Bootstrap and its default variables
-// keep this line at the end to override it
+/* Import Bootstrap and its default variables
+   keep this line at the end to override it */
 @import '~bootstrap/scss/bootstrap.scss';

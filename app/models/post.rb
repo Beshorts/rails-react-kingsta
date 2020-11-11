@@ -1,11 +1,12 @@
 class Post < ApplicationRecord
+
   belongs_to :user
+  # add image to user as active record file attachment
   has_one_attached :image
   has_many :post_hash_tags
 
-
   # a post must have an image associated as attachment
-  validates :image, presence: true
+  validates :image, presence: true, allow_blank: true
   # a post must have a description
   validates :description, presence: true
   # relation many-to-many between models Post and HashTag using the third model PostHashTags
