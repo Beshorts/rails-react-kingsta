@@ -3,8 +3,8 @@
 This app is built on a Rails backend setup to serve as an API end point for CRUD actions and user sessions, with PostgreSQL as Database for Active Record to handle tables relationship. 
 React as frontend, using React Hooks to manage state through reusable components and React Router to implement nested routes.
 
-##### Usage
-Mobile responsive app that allows users to signup or signin, create a profile, logout, upload avatar and images, write a post with description and hashtags, search by hashtags, delete.
+## Usage
+Responsive Web app that allows users to signup or signin, create a profile, logout, upload avatar and images, write a post with description and hashtags, search by hashtags, delete.
 
 SVG files designed by [https://www.opendoodles.com/](https://www.opendoodles.com/)
 
@@ -32,8 +32,7 @@ See package.json and Gemfile for versions
       - bootstrap
       - font-Awesome
       - googleFonts
-      - react-avatar
-
+      
 * **Database**
       - PostgreSQL
 
