@@ -45,7 +45,6 @@ const CreatePost = (props) => {
      to apply rules as image size must be less or equal to 2MB
      and file format jpg/png */
   if ( values.image && values.image.size <= 2097152 && (imageFormat.test(values.image.name)) ) {
-    console.log(values.image);
     formData.append('image', values.image);
   } else {
     setSizeError(true);
@@ -71,8 +70,6 @@ const CreatePost = (props) => {
           // show error on response failed
           setError(true);
         }
-        console.log(response.data.image);
-        console.log(response.data)
       })
     // catch error on request failed
     .catch (() => {

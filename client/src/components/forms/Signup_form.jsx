@@ -45,11 +45,9 @@ const SignupForm = (props) => {
         localStorage.setItem('userSession', 'true');
         localStorage.setItem('currentUser', JSON.stringify({user: {id: response.data.user.id, username: response.data.user.username}}));
         handleLogin(response.data);
-        console.log(response.data.user);
         props.history.push(`/users/${response.data.user.id}/update`);
       } else  {
         setErrors(response.data.errors);
-       console.log(response.data.errors);
       }
     })
   };

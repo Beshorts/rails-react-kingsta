@@ -44,8 +44,6 @@ function UserPost(props) {
         setUser(response.data.user);
         setError(false);
         setLoading(false);
-        console.log(response.data.post);
-        console.log(response.data.image);
       } catch (error) {
          setError(true);
          setLoading(false);
@@ -62,7 +60,6 @@ function UserPost(props) {
     .then(response => {
       setError(false)
       setPostDestroy(true);
-      console.log(response)
       props.history.push(`/users/${user.id}`)
     }).catch((error ) => {
         setError(true);
