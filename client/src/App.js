@@ -78,8 +78,6 @@ const App = (props) => {
   const loginStatus = async () => {
     try {
       const response = await axios.get('/api/logged_in',{currentUser}, {withCredentials: true})
-        console.log(response.data.logged_in);
-        console.log(response.data);
         if (response.data.logged_in) {
           handleLogin(response.data);
         } else if (localStorage.userSession) {
@@ -101,7 +99,6 @@ const App = (props) => {
   const handleLogin = (data) => {
     setIsLoggedIn(true);
     setCurrentUser(data.user);
-    console.log(data.user);
   };
   // logout user acion logic in Navbar, destroy user session in local storage too.
   const handleLogout = () => {

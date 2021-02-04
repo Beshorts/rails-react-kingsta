@@ -42,7 +42,6 @@ const PostsSearched = (props) => {
           setNotFound(false);
           setError(false);
           setLoading(false);
-          console.log(postsListFiltered);
         } else if (posts.length === 0)  {
           setImages('');
           setFilteredPosts([]);
@@ -70,7 +69,6 @@ const PostsSearched = (props) => {
       image: images[i]
     });
   }
-  console.log(postWithImage);
 
   // show posts who response to query parameters
   const searchResults =

@@ -24,7 +24,6 @@ function UserPostsIndex(props, match) {
     });
   }
 
-  console.log(postWithImage);
 
   /* iterate through Posts array and get all posts from currentUser
      on click image redirect to current post details */

@@ -35,7 +35,6 @@ function UserProfile(props) {
            setPosts(response.data.posts);
            setError(false);
            setLoading(false);
-           console.log(response.data)
       } catch (error) {
         setError(true);
         setLoading(false);

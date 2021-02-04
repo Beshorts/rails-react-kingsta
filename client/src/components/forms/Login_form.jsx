@@ -42,7 +42,6 @@ const LoginForm = (props) => {
         localStorage.setItem('userSession', JSON.stringify(response.data.logged_in));
         localStorage.setItem('currentUser', JSON.stringify({user: {id: response.data.user.id, username: response.data.user.username}}));
         handleLogin(response.data);
-        console.log(response.data);
         props.history.push(`/users/${response.data.user.id}`);
       } else {
         setErrors(response.data.errors);

@@ -52,7 +52,6 @@ const UpdateForm = (props) => {
     setLoading(true);
     axios.patch(`/api/users/${userId}`, formData, {timeout: 15000, withCredentials: true})
       .then(response => {
-        console.log(response.status);
         if (response.data.status === 'updated') {
           setValues(response.data);
           setLoading(false);
@@ -63,8 +62,6 @@ const UpdateForm = (props) => {
           // show error on response failed
           setError(true);
         }
-        console.log(values.avatar);
-        console.log(response);
       })
     // catch error on request failed
     .catch(error => {
