@@ -8,12 +8,6 @@ Responsive Web app that allows users to signup or signin, create a profile, logo
 
 SVG files designed by [https://www.opendoodles.com/](https://www.opendoodles.com/)
 
-## Live Application URL
-Deployed on Heroku :hearts:
-
-[ https://kingsta-social-media.herokuapp.com/](
-https://kingsta-social-media.herokuapp.com/)
-
 ## Technologies used
 See package.json and Gemfile for versions
 
